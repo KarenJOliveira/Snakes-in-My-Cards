@@ -1,0 +1,27 @@
+
+#snake-area{
+    display: flex;
+    border: 1px solid #000000;
+    margin: 1% auto;
+    width:60%;
+    height:80%;
+}
+
+
+#grid {
+    display: grid;
+    grid-template-rows: repeat(10, auto);
+    grid-template-columns: repeat(10, auto);
+    place-items: center;
+}
+
+#grid > div {
+    height: 1em;
+    width: 1em;
+    display: grid;
+    place-items: center;
+    background-color: lightgreen;
+    border: 2px solid darkgreen;
+    box-sizing: border-box;
+}
+
