@@ -10,12 +10,24 @@ body{
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: auto;
+    column-gap: 1em;
+}
+
+button{
+    width: 5em;
+    height: 2em;
+    grid-column: 1/2;
+    grid-row: auto;
 }
 
 #game-area{
+    grid-column: 2/3;
+    grid-row: 1/2;
+    
     display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+
 }
 
 

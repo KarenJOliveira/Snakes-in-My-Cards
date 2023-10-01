@@ -1,13 +1,50 @@
-.carta{
-    display:inline-block;
+.card{
+    display: flex;
     border: 1px solid black;
-    width: 110px;
-    height: 130px;
-    margin: 1px;
+    width: 6em;
+    height: 8em;
+    margin: 0.5em;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
 }
 
-.carta span{
+.card span{
     display: block;
     font-size: 2em;
     text-align: center;
+}
+
+.deck{
+    grid-column: 1/2;
+    grid-row: 1/2;
+    
+    width: 8em;
+    height: 10em;
+    margin: auto;
+    background-color: rgb(40, 167, 89);
+    border: 0.5em solid green;
+}
+
+.discardPile{
+    grid-column: 2/3;
+    grid-row: 1/2;
+
+    width: 8em;
+    height: 10em;
+    margin: auto;
+    background-color:rgb(40, 167, 89);
+    border: 0.5em solid green;
+}
+
+.deck-jogador{
+    display: inline-flex;
+    grid-column: 1/3;
+    grid-row: 2/3;
+    width: 25em;
+    height: 10em;
+    margin: auto;
+    background-color:rgb(40, 167, 89);
+    border: 0.5em solid green;
+
 }
