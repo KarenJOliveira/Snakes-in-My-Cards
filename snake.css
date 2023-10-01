@@ -1,0 +1,36 @@
+#grid {
+  display: grid;
+  grid-template-rows: repeat(10, 20px);
+  grid-template-columns: repeat(10, 20px);
+  place-items: center;
+  border: 1px solid black;
+}
+
+#grid > div {
+  height: 20px;
+  width: 20px;
+  display: grid;
+  place-items: center;
+}
+
+.snake {
+  font-size: 12px;
+  background-color: lightgreen;
+  border: 3px solid darkgreen;
+}
+
+.snake.head {
+  background-color: green;
+  color: yellow; 
+  z-index: 1;
+}
+
+.snake.head[data-hit=true]{
+  background-color: red;
+  color: white;
+}
+
+.snake.tail {
+  background-color: green;
+  color: yellow; 
+}

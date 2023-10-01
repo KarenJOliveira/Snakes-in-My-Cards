@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="snake.css">
+    <link rel="stylesheet" href="cards.css">
     <script src="script.js" defer type="module"></script>
 </head>
 <body>
     
     <div id="grid">
-        <div id="head" style="grid-row: 3; grid-column: 1;">H</div>
-        <div class="body" style="grid-row: 4; grid-column: 1;">B</div>
-        <div class="body" style="grid-row: 5; grid-column: 1;">B</div>
-        <div class="tail" style="grid-row: 6; grid-column: 1;">T</div>
+        <div id="head" class="snake head" style="grid-row: 3; grid-column: 1;">H</div>
+        <div class="snake body" style="grid-row: 4; grid-column: 1;">B</div>
+        <div class="snake body" style="grid-row: 5; grid-column: 1;">B</div>
+        <div class="snake tail" style="grid-row: 6; grid-column: 1;">T</div>
     </div>
     <button id="anda">Anda</button>
     
-    <div class="game-area">
+    <div id="game-area">
         <div>
-            <span id="descarte" class="baralho">
-                //descarte
-            </span>
-            <span class="baralho">
-                //baralho
-            </span>
+            <div id="descarte">
+                
+            </div>
+            <div class="baralho">
+                <div class="carta">
+                    <span id="movimento"></span>
+                </div>
+            </div>
         </div>
         <div class="deck-jogador">
-            <span class="carta">
-                //cartas do jogador
+            <span>
+                
             </span>
         </div>
     </div>
