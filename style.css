@@ -1,18 +1,11 @@
 
-#snake-area{
-    display: flex;
-    border: 1px solid #000000;
-    margin: 1% auto;
-    width:60%;
-    height:80%;
-}
-
-
 #grid {
     display: grid;
-    grid-template-rows: repeat(10, auto);
-    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(10, 1em);
+    grid-template-columns: repeat(10, 1em);
     place-items: center;
+    box-sizing: border-box;
+    border: 1px solid black;
 }
 
 #grid > div {
@@ -25,3 +18,8 @@
     box-sizing: border-box;
 }
 
+body{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+}
