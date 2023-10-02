@@ -1,15 +1,30 @@
+import {turnClockwise, turnAntiClockwise, increaseSpeed, decreaseSpeed} from './snake.js';
+
 const cards = [
-    {efeito: "turn-left", symbol: "&#8634"},
-    {efeito: "turn-right", symbol:'&#8635'},
-    {efeito: "increase-speed", symbol: "V"},
-    {efeito: "decrease-speed", symbol: "S"},
-    {efeito: "block-player", symbol: "P"},
-    {efeito: "take-two", symbol: '&#127199'},
+    {efeito: "turn-left", symbol: "↻"},
+    {efeito: "turn-right", symbol:"↺"},
+    {efeito: "increase-speed", symbol: "⇡"}, 
+    {efeito: "decrease-speed", symbol: "⭭"},
+    {efeito: "block-player", symbol: "⭙"},
+    {efeito: "take-two", symbol: "🃟"},
     {efeito: "increase-size", symbol: "+"},
     {efeito: "decrease-size", symbol: "-"},
-    {efeito: "play-again", symbol: "M"}
+    {efeito: "play-again", symbol: "🍀"}
 ]
+const deck = [
+    {...cards[0]},
+    {...cards[1]},
+    {...cards[2]},
+    {...cards[3]},
+    {...cards[4]},
+    {...cards[5]},
+    {...cards[6]},
+    {...cards[7]},
+    {...cards[8]}
+];
+const hand = [];
 
+const discardPile = [];
 
 const obstacles = [
     {x: 1, y: 1},
@@ -20,21 +35,64 @@ const obstacles = [
 ]
 
 const bonus = [
-    {x: 1, y: 7, type: "V"},
-    {x: 3, y: 3, type: "+"},
-    {x: 5, y: 5, type: "M"},
-    {x: 7, y: 1, type: "S"},
+    {x: 1, y: 7, type: "increase-speed"},
+    {x: 3, y: 3, type: "increase-size"},
+    {x: 5, y: 5, type: "play-again"},
+    {x: 7, y: 1, type: "take-two"},
 ]
 
-export function getCards(){
+function getCards(){
     return cards;
 }
 
-export function getObstacles(){
+function getDeck(){
+    return deck;
+}
+
+function getHand(){
+    drawHand();
+    return hand;
+}
+
+function getObstacles(){
     return obstacles;
 }
 
-export function getBonus(){
+function getBonus(){
     return bonus;
 }
 
+function playCard(index)
+{
+    const card = hand[index];
+    switch(card.efeito)
+    {
+        case "turn-left": turnClockwise();  break;
+        case "turn-right": turnAntiClockwise(); break;
+        case "increase-speed": increaseSpeed(); break;
+        case "decrease-speed": decreaseSpeed(); break;
+        case "block-player": break;
+        case "take-two": break;
+        case "increase-size": break;
+        case "decrease-size": break;
+        case "play-again": break;
+    }
+    hand.forEach(c=>discardPile.push(c));
+    hand.splice(0, hand.length);
+}
+
+function drawHand(){
+    if(deck.length>0){
+        hand.push(deck.pop());
+    }else{
+        deck.push(...discardPile);
+        discardPile.splice(0, discardPile.length);
+        hand.push(deck.pop());
+    }
+}
+
+function getRandom(num){
+    return Math.floor(Math.random()*num);
+}
+
+export { getHand, getObstacles, getBonus, playCard, getCards, getDeck, getRandom};
