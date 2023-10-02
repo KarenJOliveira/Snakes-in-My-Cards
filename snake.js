@@ -94,8 +94,7 @@ function decreaseSpeed() {
 }
 
 function increaseSize(){
-  snakeBody.push({x: snakeBody[snakeBody.length-1].x, y: snakeBody[snakeBody.length-1].y});
-
+  snakeBody.push({x: snakeTail.x, y: snakeTail.y});
 }
-export { getSnake, moveSnake, turnAntiClockwise, turnClockwise, increaseSpeed, decreaseSpeed };
+export { getSnake, moveSnake, turnAntiClockwise, turnClockwise, increaseSpeed, decreaseSpeed, increaseSize };
 

@@ -1,4 +1,4 @@
-import {turnClockwise, turnAntiClockwise, increaseSpeed, decreaseSpeed} from './snake.js';
+import {turnClockwise, turnAntiClockwise, increaseSpeed, decreaseSpeed, increaseSize} from './snake.js';
 
 const cards = [
     {efeito: "turn-left", symbol: "↻"},
@@ -50,7 +50,6 @@ function getDeck(){
 }
 
 function getHand(){
-    drawHand();
     return hand;
 }
 
@@ -62,9 +61,8 @@ function getBonus(){
     return bonus;
 }
 
-function playCard(index)
+function playCard(card)
 {
-    const card = hand[index];
     switch(card.efeito)
     {
         case "turn-left": turnClockwise();  break;
@@ -73,7 +71,7 @@ function playCard(index)
         case "decrease-speed": decreaseSpeed(); break;
         case "block-player": break;
         case "take-two": break;
-        case "increase-size": break;
+        case "increase-size": increaseSize(); break;
         case "decrease-size": break;
         case "play-again": break;
     }

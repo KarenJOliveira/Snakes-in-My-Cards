@@ -2,36 +2,52 @@ import { moveSnake, getSnake } from "./snake.js";
 import { getBonus, getObstacles, getHand, getDeck, getCards, playCard, getRandom, drawHand} from "./cards.js";
 
 const snakeHeadDiv = document.querySelector("#head");
-const snakeBodyDiv = document.querySelectorAll(".snake.body");
+let snakeBodyDiv = document.querySelectorAll(".snake.body");
 const snakeTailDiv = document.querySelector(".snake.tail");
 
 let arrastado = null;
 
 const eDeck = document.querySelector(".deck");
+
+let cont = getDeck().length;
+const eCont = document.createElement("span");
+eCont.classList.add(".cont");
+eCont.textContent = cont;
+eDeck.appendChild(eCont);
+
 const eDiscardPile = document.querySelector(".discardPile");
 const eHand = document.querySelector(".deck-jogador");
 const eObstacles = document.querySelector(".obstacles");
 
-let cont = getDeck().length;
 eDiscardPile.addEventListener("dragover", dragOver);
 eDiscardPile.addEventListener("drop", receiveCard);
 
 const eCards = createCards();
 
-//updateCards();
+updateCards();
 updateSnake();
 
 function updateSnake() {
   const snake = getSnake();
+
   //update head in grid
   snakeHeadDiv.style.gridColumn = snake.head.x;
   snakeHeadDiv.style.gridRow = snake.head.y;
   snakeHeadDiv.dataset.hit = snake.head.hit;
-
+  
   //console.log(snakeHeadDiv.style.gridColumn);
   //console.log(snakeHeadDiv.style.gridRow);
-
+  
   //update body in grid
+  if(snakeBodyDiv.length < Object.keys(snake.body).length){ //problema no length
+    const newBodyDiv = document.createElement("div");
+    newBodyDiv.setAttribute("style", "gridColumn = 0, gridRow = 0")
+    newBodyDiv.classList.add(".snake.body");
+    newBodyDiv.style.gridColumn = snake.body[snakeBodyDiv.length-1].x;
+    newBodyDiv.style.gridRow = snake.body[snakeBodyDiv.length-1].y;
+  }
+  snakeBodyDiv = document.querySelectorAll(".snake.body");
+
   for(let i=0; i<snakeBodyDiv.length; i++){
     snakeBodyDiv[i].style.gridColumn = snake.body[i].x;
     snakeBodyDiv[i].style.gridRow = snake.body[i].y;
@@ -52,9 +68,23 @@ buttonAnda.addEventListener('click', function(){
   updateSnake();
 });
 
+function updateCards(){
+  drawHand();
+  drawHand();
+  drawHand();
+  
+  eHand.replaceChildren();
+  for(let i=0; i<getHand().length; i++){
+    const idx = getCards().findIndex(c=>c.symbol === getHand()[i].symbol);
+    eHand.appendChild(eCards[idx]);
+  }
+  const deck = getDeck();
+  eCont.textContent = deck.length;
+}
 
 function createCards(){
   const cards = getCards();
+  const eCards = []; 
   for(let i=0; i<cards.length; i++){
     const eCard = document.createElement("span");
     eCard.classList.add("card");
@@ -62,14 +92,16 @@ function createCards(){
     eCard.addEventListener("dragstart", dragCard);
     eCard.dataset.efeito = cards[i].efeito;
     eCard.dataset.symbol = cards[i].symbol;
+    eCard.dataset.id = i;
 
     const eSymbol = document.createElement("span");
     eSymbol.textContent = cards[i].symbol;
     console.log(cards[i].symbol);
     
     eCard.appendChild(eSymbol);
-    eHand.appendChild(eCard);
+    eCards.push(eCard);
   }
+  return eCards;
 }
 
 function createObstacles(){
@@ -102,12 +134,13 @@ function dragOver(event){
 function receiveCard(event){
   if(arrastado == null) {return};
   if(event.target != eDiscardPile) {return};
+  
+  eDiscardPile.replaceChildren();
   event.target.appendChild(arrastado);
   
-  playCard(arrastado.dataset.index);//{efeito: arrastado.dataset.efeito, symbol: arrastado.dataset.symbol}
-  drawHand();
+  playCard({efeito: arrastado.dataset.efeito, symbol: arrastado.dataset.symbol});
   updateSnake();
-  //updateCards();
+  updateCards();
   
   arrastado = null;
 }
