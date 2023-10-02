@@ -1,10 +1,10 @@
 
-const snakeHead = { x: 5, y: 3, d: 'e', hit: false, speed:2 };
+const snakeHead = { x: 3, y: 5, d: 'e', hit: false, speed:2 };
 const snakeBody = [
-  { x: 5, y: 4 },
+  { x: 4, y: 5 },
   { x: 5, y: 5 },
 ]
-const snakeTail = { x: 5, y: 6 };
+const snakeTail = { x: 6, y:5 };
 
 function getSnake() {
   return {
@@ -30,10 +30,10 @@ function moveSnake() {
   snakeBody[0].y = snakeHead.y;
   switch (snakeHead.d) {
     case 'n':
-      snakeHead.y--;
+      snakeHead.y++;
       break;
     case 's':
-      snakeHead.y++;
+      snakeHead.y--;
       break;
     case 'e':
       snakeHead.x++;
@@ -53,7 +53,8 @@ function isColliding() {
 }
 
 function turnClockwise() {
-  switch (snakeHead) {
+  console.log("aaaaaaa");
+  switch (snakeHead.d) {
     case 'n':
       snakeHead.d = 'e';
       break;
@@ -70,7 +71,8 @@ function turnClockwise() {
 }
 
 function turnAntiClockwise() {
-  switch (snakeHead) {
+  console.log("aaaaaaa");
+  switch (snakeHead.d) {
     case 'n':
       snakeHead.d = 'w';
       break;

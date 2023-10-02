@@ -6,7 +6,7 @@ let snakeBodyDiv = document.querySelectorAll(".snake.body");
 const snakeTailDiv = document.querySelector(".snake.tail");
 
 let arrastado = null;
-
+let rodada = 1;
 const eDeck = document.querySelector(".deck");
 
 let cont = getDeck().length;
@@ -60,14 +60,14 @@ function updateSnake() {
   //console.log(snakeTailDiv.style.gridRow);
 }
 
-
+/*
 const buttonAnda = document.querySelector("#anda");
 buttonAnda.addEventListener('click', function(){
   moveSnake();
 
   updateSnake();
 });
-
+*/
 function updateCards(){
   drawHand();
   drawHand();
@@ -133,14 +133,24 @@ function dragOver(event){
 
 function receiveCard(event){
   if(arrastado == null) {return};
-  if(event.target != eDiscardPile) {return};
+  //if(event.target != eDiscardPile) {return};
   
-  eDiscardPile.replaceChildren();
-  event.target.appendChild(arrastado);
+  if(rodada > 1){
+    while(eDiscardPile.firstChild) {
+      eDiscardPile.removeChild(eDiscardPile.firstChild);
+  }
+  }
+  
+  let descarte = document.getElementById("descarte");
+  descarte.appendChild(arrastado);
+
+  arrastado.add
   
   playCard({efeito: arrastado.dataset.efeito, symbol: arrastado.dataset.symbol});
-  updateSnake();
-  updateCards();
   
+  updateCards();
+  moveSnake();
+  updateSnake();
+  rodada++;
   arrastado = null;
 }
