@@ -1,29 +1,24 @@
 import { moveSnake, getSnake } from "./snake.js";
-import { getCards, getBonus, getObstacles } from "./cards.js";
+import { getBonus, getObstacles, getHand, getDeck, getCards, playCard, getRandom} from "./cards.js";
 
 const snakeHeadDiv = document.querySelector("#head");
-const snakeBodyDiv = document.querySelectorAll(".body");
-const snakeTailDiv = document.querySelector(".tail");
-const speed = 0;
+const snakeBodyDiv = document.querySelectorAll(".snake.body");
+const snakeTailDiv = document.querySelector(".snake.tail");
 
 let arrastado = null;
 
 const eDeck = document.querySelector(".deck");
 const eDiscardPile = document.querySelector(".discardPile");
-const playerDeck = document.querySelector(".deck-jogador");
+const eHand = document.querySelector(".deck-jogador");
+const eObstacles = document.querySelector(".obstacles");
 
-let cont = 0;
-let points = 0;
-
+let cont = getDeck().length;
 eDiscardPile.addEventListener("dragover", dragOver);
 eDiscardPile.addEventListener("drop", receiveCard);
 
-let hand = new Array();
-let discardPile = new Array();
-const deck = createDeck();
+const eCards = createCards();
 
-
-drawCard();
+//updateCards();
 updateSnake();
 
 function updateSnake() {
@@ -57,85 +52,43 @@ buttonAnda.addEventListener('click', function(){
   updateSnake();
 });
 
-/*
-function cardEffect(card){
-  if(card.symbol === "&#8634"){
-    switch(snake.head.d){
-      case 'n':
-        snake.head.d = 'w';
-        break;
-      case 's':
-        snake.head.d = 'w';
-        break;
-      case 'e':
-        snake.head.d = 'n';
-        break;
-      case 'w':
-        snake.head.d = 's';
-        break;
-    }
-  }else if(card.symbol === "&#8635"){
-    switch(snake.head.d){
-      case 'n':
-        snake.head.d = 'e';
-        break;
-      case 's':
-        snake.head.d = 'e';
-        break;
-      case 'e':
-        snake.head.d = 's';
-        break;
-      case 'w':
-        snake.head.d = 'n';
-        break;
-    }
-  }else if(card.symbol === "+"){
-    snake.body.push({x: snake.tail.x, y: snake.tail.y});
-    snake.tail.x = snake.body[snake.body.length-1].x;
-    snake.tail.y = snake.body[snake.body.length-1].y;
-  }else if(card.symbol === "-"){
-    if(snake.body.length > 1){
-      snake.body.pop();
-      snake.tail.x = snake.body[snake.body.length-1].x;
-      snake.tail.y = snake.body[snake.body.length-1].y;
-    }else{
-      console.log("Não é possível diminuir o tamanho da cobra");
-      return;
-    }
-  }
-  updateSnake();
-}
-*/
-function drawCard(){
-  for(let i=0; i<3; i++){
-    const card = deck.pop();
-    hand.push(card);
-    playerDeck.appendChild(card);
-    card.style.display = 'block';
-  }
-}
 
-function createDeck(){
-  const deck = getCards();
-  const cards = new Array();
-  
-  for(let i=0; i<deck.length; i++){
+function createCards(){
+  const cards = getCards();
+  for(let i=0; i<cards.length; i++){
     const eCard = document.createElement("span");
     eCard.classList.add("card");
     eCard.setAttribute("draggable", true);
     eCard.addEventListener("dragstart", dragCard);
+    eCard.dataset.efeito = cards[i].efeito;
+    eCard.dataset.symbol = cards[i].symbol;
 
     const eSymbol = document.createElement("span");
-    console.log(deck[i].symbol);
-    eSymbol.innerHTML = (deck[i].symbol);
-    eSymbol.style.display = 'block';
+    eSymbol.textContent = cards[i].symbol;
+    console.log(cards[i].symbol);
+    
     eCard.appendChild(eSymbol);
-
-    cards[i] = eCard;
+    eHand.appendChild(eCard);
   }
+}
 
-  eDeck.appendChild(cards[0]);
-  return cards;
+function createObstacles(){
+  const obstacles = getObstacles();
+  const eObstacles = [];
+  for(let i=0; i<obstacles.length; i++){
+    const eObstacle = document.createElement("span");
+    eObstacle.classList.add(".obstacles");
+    
+    eObstacles.push(eObstacle);
+  }
+  return eObstacles;
+}
+
+function placeObstacles(){
+  const obstacles = getObstacles();
+  const idx = getRandom(getObstacles().length);
+  eObstacles[idx].style.gridColumn = obstacles[idx].x;
+  eObstacles[idx].style.gridRow = obstacles[idx].y;
 }
 
 function dragCard(event){
@@ -147,9 +100,14 @@ function dragOver(event){
 }
 
 function receiveCard(event){
-    if(arrastado == null) {return};
-    if(event.target != eDiscardPile) {return};
-
-    event.target.appendChild(arrastado);
-    arrastado = null;
+  if(arrastado == null) {return};
+  if(event.target != eDiscardPile) {return};
+  
+  playCard(arrastado.dataset.index);//{efeito: arrastado.dataset.efeito, symbol: arrastado.dataset.symbol}
+  event.target.appendChild(arrastado);
+  
+  updateSnake();
+  //updateCards();
+  
+  arrastado = null;
 }
