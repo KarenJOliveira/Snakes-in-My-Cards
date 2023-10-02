@@ -15,6 +15,14 @@
     text-align: center;
 }
 
+.obstacles{
+    display: block;
+    border: 0.1em solid black;
+    width: 0.3em;
+    height: 0.5em;
+    border-radius: 40%;
+}
+
 .deck{
     grid-column: 1/2;
     grid-row: 1/2;

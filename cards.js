@@ -95,4 +95,4 @@ function getRandom(num){
     return Math.floor(Math.random()*num);
 }
 
-export { getHand, getObstacles, getBonus, playCard, getCards, getDeck, getRandom};
+export { getHand, getObstacles, getBonus, playCard, getCards, getDeck, getRandom, drawHand};

@@ -1,5 +1,5 @@
 import { moveSnake, getSnake } from "./snake.js";
-import { getBonus, getObstacles, getHand, getDeck, getCards, playCard, getRandom} from "./cards.js";
+import { getBonus, getObstacles, getHand, getDeck, getCards, playCard, getRandom, drawHand} from "./cards.js";
 
 const snakeHeadDiv = document.querySelector("#head");
 const snakeBodyDiv = document.querySelectorAll(".snake.body");
@@ -102,10 +102,10 @@ function dragOver(event){
 function receiveCard(event){
   if(arrastado == null) {return};
   if(event.target != eDiscardPile) {return};
-  
-  playCard(arrastado.dataset.index);//{efeito: arrastado.dataset.efeito, symbol: arrastado.dataset.symbol}
   event.target.appendChild(arrastado);
   
+  playCard(arrastado.dataset.index);//{efeito: arrastado.dataset.efeito, symbol: arrastado.dataset.symbol}
+  drawHand();
   updateSnake();
   //updateCards();
   

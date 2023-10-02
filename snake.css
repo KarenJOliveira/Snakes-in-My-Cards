@@ -17,6 +17,7 @@
   font-size: 12px;
   background-color: lightgreen;
   border: 3px solid darkgreen;
+  border-radius: 3px;
 }
 
 .snake.head {
