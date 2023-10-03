@@ -7,8 +7,8 @@ import {
 } from "./snake.js";
 
 const cards = [
-  { efeito: "turn-left", symbol: "↻" },
-  { efeito: "turn-right", symbol: "↺" },
+  { efeito: "turn-clockwise", symbol: "↺" },
+  { efeito: "turn-anticlockwise", symbol: "↻" },
   { efeito: "increase-speed", symbol: "⇡" },
   { efeito: "decrease-speed", symbol: "⭭" },
   { efeito: "block-player", symbol: "⭙" },
@@ -70,10 +70,10 @@ function getPlayed() {
 function playCard(card) {
   console.log("played: ", card);
   switch (card.efeito) {
-    case "turn-left":
+    case "turn-clockwise":
       turnClockwise();
       break;
-    case "turn-right":
+    case "turn-anticlockwise":
       turnAntiClockwise();
       break;
     case "increase-speed":
