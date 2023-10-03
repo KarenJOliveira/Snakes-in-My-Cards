@@ -1,33 +1,29 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  border: 0;
+  margin: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 70% 30%;
+  grid-template-columns: auto;
+  column-gap: 1em;
+  height: 100vh;
+  aspect-ratio: 9/16;
 }
 
 
-
-
-
-body{
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto;
-    column-gap: 1em;
+button {
+  width: 5em;
+  height: 2em;
+  grid-column: 1/2;
+  grid-row: auto;
 }
-
-button{
-    width: 5em;
-    height: 2em;
-    grid-column: 1/2;
-    grid-row: auto;
-}
-
-#game-area{
-    grid-column: 2/3;
-    grid-row: 1/2;
-    
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-
-}
-
-

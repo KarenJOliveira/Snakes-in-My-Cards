@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,27 +10,23 @@
     <link rel="stylesheet" href="cards.css">
     <script src="script.js" defer type="module"></script>
 </head>
+
 <body>
-    
-    <div id="grid">
-        <div id="head" class="snake head" style="grid-row: 3; grid-column: 1;">H</div>
-        <div class="snake body" style="grid-row: 4; grid-column: 1;">B</div>
-        <div class="snake body" style="grid-row: 5; grid-column: 1;">B</div>
-        <div class="snake tail" style="grid-row: 6; grid-column: 1;">T</div>
-    </div>
-    <button id="anda">Anda</button>
-    
-    <div id="game-area">
-        <span id="descarte"class="discardPile">
-            
-        </span>
-        <span class="deck">
-            
-        </span>
-        <span class="deck-jogador">
-            
-        </span>
-    </div>
-    
+    <main>
+        <div id="grid">
+            <div id="head" class="snake head" style="grid-row: 3; grid-column: 1;">H</div>
+            <div class="snake body" style="grid-row: 4; grid-column: 1;">B</div>
+            <div class="snake body" style="grid-row: 5; grid-column: 1;">B</div>
+            <div class="snake tail" style="grid-row: 6; grid-column: 1;">T</div>
+        </div>
+        <div id="game-area">
+            <div id="played"></div>
+            <div id="deck"></div>
+            <div id="hand"></div>
+            <div id="discard"></div>
+
+        </div>
+    </main>
 </body>
+
 </html>
