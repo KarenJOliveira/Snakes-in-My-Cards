@@ -14,7 +14,7 @@
   place-items: center;
 }
 
-.snake {
+.snake, .obstacle {
   font-size: 12px;
   background-color: lightgreen;
   border: 3px solid darkgreen;
@@ -25,6 +25,7 @@
   background-color: green;
   color: yellow; 
   z-index: 1;
+  border-radius: 35%;
 }
 
 .snake.head[data-hit=true]{
@@ -35,4 +36,12 @@
 .snake.tail {
   background-color: green;
   color: yellow; 
+  transform-origin: 50% 50%;
+  transform: scale(80%);
+  border-radius: 35%;
+}
+
+.obstacle {
+  background-color: grey;
+  border-color: black;
 }

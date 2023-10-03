@@ -55,7 +55,7 @@
     opacity: 80%;
 }
 
-.card {
+.card, #deck {
   display: flex;
   border: 1px solid black;
   border-radius: 8px;
@@ -66,6 +66,10 @@
   color: green;
   align-items: center;
   justify-content: center;
+}
+
+#deck {
+    background-color: bisque;
 }
 
 .card span {
