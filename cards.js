@@ -84,7 +84,7 @@ function playCard(card) {
       break;
     case "block-player":
       break;
-    case "take-two":
+    case "take-two": //falta implementar
       break;
     case "increase-size":
       increaseSize();
@@ -92,7 +92,7 @@ function playCard(card) {
     case "decrease-size":
       decreaseSize();
       break;
-    case "play-again":
+    case "play-again": //falta implementar
       break;
   }
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
