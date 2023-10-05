@@ -106,6 +106,10 @@ function increaseSize() {
   snakeBody.push({ x: snakeTail.x, y: snakeTail.y });
 }
 
+function decreaseSize(){
+  snakeBody.pop();
+}
+
 function getObstacles() {
   return obstacles;
 }
@@ -118,5 +122,6 @@ export {
   increaseSpeed,
   decreaseSpeed,
   increaseSize,
+  decreaseSize,
   getObstacles
 };

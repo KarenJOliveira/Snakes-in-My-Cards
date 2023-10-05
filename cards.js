@@ -4,6 +4,7 @@ import {
   increaseSpeed,
   decreaseSpeed,
   increaseSize,
+  decreaseSize,
 } from "./snake.js";
 
 const cards = [
@@ -54,7 +55,6 @@ function getHand() {
 }
 
 
-
 function getBonus() {
   return bonus;
 }
@@ -90,6 +90,7 @@ function playCard(card) {
       increaseSize();
       break;
     case "decrease-size":
+      decreaseSize();
       break;
     case "play-again":
       break;
