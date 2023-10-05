@@ -1,9 +1,9 @@
-const snakeHead = { x: 3, y: 5, d: "e", hit: false, speed: 2 };
+const snakeHead = { x: 6, y: 5, d: "e", hit: false, speed: 2 };
 const snakeBody = [
   { x: 4, y: 5 },
   { x: 5, y: 5 },
 ];
-const snakeTail = { x: 6, y: 5 };
+const snakeTail = { x: 3, y: 5 };
 const obstacles = [];
 
 //first row/col on grid css is 1
