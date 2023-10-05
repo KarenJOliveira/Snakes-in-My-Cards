@@ -1,19 +1,26 @@
-
-const snakeHead = { x: 3, y: 5, d: 'e', hit: false, speed:2 };
+const snakeHead = { x: 3, y: 5, d: "e", hit: false, speed: 2 };
 const snakeBody = [
   { x: 4, y: 5 },
   { x: 5, y: 5 },
-]
-const snakeTail = { x: 6, y:5 };
+];
+const snakeTail = { x: 6, y: 5 };
+const obstacles = [];
+
+//first row/col on grid css is 1
+for (let i = 1; i <= 10; i++) {
+  obstacles.push({ x: i, y: 1 });
+  obstacles.push({ x: i, y: 10 });
+  obstacles.push({ x: 1, y: i });
+  obstacles.push({ x: 10, y: i });
+}
 
 function getSnake() {
   return {
     head: { ...snakeHead },
-    body: { ...snakeBody },
-    tail: { ...snakeTail }
-  }
+    body: [...snakeBody ],
+    tail: { ...snakeTail },
+  };
 }
-
 
 function moveSnake() {
   //m0ve body
@@ -29,16 +36,16 @@ function moveSnake() {
   snakeBody[0].x = snakeHead.x;
   snakeBody[0].y = snakeHead.y;
   switch (snakeHead.d) {
-    case 'n':
+    case "n":
       snakeHead.y++;
       break;
-    case 's':
+    case "s":
       snakeHead.y--;
       break;
-    case 'e':
+    case "e":
       snakeHead.x++;
       break;
-    case 'w':
+    case "w":
       snakeHead.x--;
       break;
   }
@@ -47,25 +54,25 @@ function moveSnake() {
 }
 
 function isColliding() {
-  if ((snakeHead.x === snakeTail.x && snakeHead.y === snakeTail.y)) return true;
-  const c = snakeBody.filter((b => (b.x === snakeHead.x && b.y === snakeHead.y)));
+  if (snakeHead.x === snakeTail.x && snakeHead.y === snakeTail.y) return true;
+  const c = snakeBody.filter((b) => b.x === snakeHead.x && b.y === snakeHead.y);
   return c.length > 0;
 }
 
 function turnClockwise() {
   console.log("aaaaaaa");
   switch (snakeHead.d) {
-    case 'n':
-      snakeHead.d = 'e';
+    case "n":
+      snakeHead.d = "e";
       break;
-    case 'e':
-      snakeHead.d = 's';
-      break; 
-    case 's':
-      snakeHead.d = 'w';
-      break; 
-    case 'w':
-      snakeHead.d = 'n';
+    case "e":
+      snakeHead.d = "s";
+      break;
+    case "s":
+      snakeHead.d = "w";
+      break;
+    case "w":
+      snakeHead.d = "n";
       break;
   }
 }
@@ -73,30 +80,43 @@ function turnClockwise() {
 function turnAntiClockwise() {
   console.log("aaaaaaa");
   switch (snakeHead.d) {
-    case 'n':
-      snakeHead.d = 'w';
+    case "n":
+      snakeHead.d = "w";
       break;
-    case 'e':
-      snakeHead.d = 'n';
-      break; 
-    case 's':
-      snakeHead.d = 'e';
-      break; 
-    case 'w':
-      snakeHead.d = 's';
+    case "e":
+      snakeHead.d = "n";
+      break;
+    case "s":
+      snakeHead.d = "e";
+      break;
+    case "w":
+      snakeHead.d = "s";
       break;
   }
 }
 
 function increaseSpeed() {
-  snakeHead.speed += snakeHead.speed<8?1:0;
+  snakeHead.speed += snakeHead.speed < 8 ? 1 : 0;
 }
 function decreaseSpeed() {
-  snakeHead.speed -= snakeHead.speed>2?1:0;
+  snakeHead.speed -= snakeHead.speed > 2 ? 1 : 0;
 }
 
-function increaseSize(){
-  snakeBody.push({x: snakeTail.x, y: snakeTail.y});
+function increaseSize() {
+  snakeBody.push({ x: snakeTail.x, y: snakeTail.y });
 }
-export { getSnake, moveSnake, turnAntiClockwise, turnClockwise, increaseSpeed, decreaseSpeed, increaseSize };
 
+function getObstacles() {
+  return obstacles;
+}
+
+export {
+  getSnake,
+  moveSnake,
+  turnAntiClockwise,
+  turnClockwise,
+  increaseSpeed,
+  decreaseSpeed,
+  increaseSize,
+  getObstacles
+};

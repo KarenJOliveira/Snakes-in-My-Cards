@@ -33,13 +33,6 @@ const hand = [];
 const discard = [];
 const played = [];
 
-const obstacles = [
-  { x: 1, y: 1 },
-  { x: 3, y: 6 },
-  { x: 5, y: 2 },
-  { x: 7, y: 5 },
-  { x: 9, y: 3 },
-];
 
 const bonus = [
   { x: 1, y: 7, type: "increase-speed" },
@@ -60,9 +53,7 @@ function getHand() {
   return hand;
 }
 
-function getObstacles() {
-  return obstacles;
-}
+
 
 function getBonus() {
   return bonus;
@@ -149,7 +140,6 @@ function getRandom(num) {
 
 export {
   getHand,
-  getObstacles,
   getBonus,
   playCard,
   getCards,
