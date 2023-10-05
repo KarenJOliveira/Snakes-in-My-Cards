@@ -1,7 +1,7 @@
 const snakeHead = { x: 6, y: 5, d: "e", hit: false, speed: 2 };
 const snakeBody = [
-  { x: 4, y: 5 },
   { x: 5, y: 5 },
+  { x: 4, y: 5 },
 ];
 const snakeTail = { x: 3, y: 5 };
 const obstacles = [];
@@ -50,7 +50,7 @@ function moveSnake() {
       break;
   }
 
-  snakeHead.hit = isColliding();
+  snakeHead.hit = isColliding() || isCollidingWithObstacle();
 }
 
 function isColliding() {
@@ -59,8 +59,14 @@ function isColliding() {
   return c.length > 0;
 }
 
+function isCollidingWithObstacle(){
+  for(let i = 0; i < obstacles.length; i++){
+    if(obstacles[i].x === snakeHead.x && obstacles[i].y === snakeHead.y) return true;
+  }
+  return false;
+}
+
 function turnClockwise() {
-  console.log("aaaaaaa");
   switch (snakeHead.d) {
     case "n":
       snakeHead.d = "e";
