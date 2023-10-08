@@ -85,18 +85,23 @@ function playCard(card) {
     case "block-player":
       break;
     case "take-two": //falta implementar
-      break;
+      hand.push(deck.splice(0, 2));
+      return;
     case "increase-size":
       increaseSize();
       break;
     case "decrease-size":
       decreaseSize();
       break;
-    case "play-again": //falta implementar
-      break;
+    case "play-again": //falta implementar: jogo não deve atualizar(cobra não deve andar, cartas não devem ser atualizadas)
+    {
+      const idx = hand.findIndex((c) => c.efeito === card.efeito);
+      played.push(hand.splice(idx,1)[0]);
+      return;
+    } 
   }
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
-  played.push(hand.splice(idx, 1)[0]);
+  played.push(hand.splice(idx,1)[0]);
   hand.forEach((c) => discard.push(c));
   hand.splice(0, hand.length);
   console.log(played, discard);

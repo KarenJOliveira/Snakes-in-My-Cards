@@ -52,9 +52,6 @@ function updateSnake() {
   snakeHeadDiv.style.gridRow = snake.head.y;
   eGrid.appendChild(snakeHeadDiv);
 
- 
-
-
   //update body in grid
   for (let i = 0; i < snake.body.length; i++) {
     const newBodyDiv = document.createElement("div");
@@ -100,7 +97,10 @@ function updateCards() {
   drawHand();
   drawHand();
 
-  eHand.replaceChildren();
+  while (eHand.firstChild) {
+    eHand.removeChild(eHand.firstChild);
+  }
+  
   for (let i = 0; i < getHand().length; i++) {
     const idx = getCards().findIndex((c) => c.symbol === getHand()[i].symbol);
     eHand.appendChild(eCards[idx]);
@@ -117,25 +117,6 @@ function createCards() {
     eCards.push(eCard);
   }
   return eCards;
-}
-
-function createObstacles() {
-  const obstacles = getObstacles();
-  const eObstacles = [];
-  for (let i = 0; i < obstacles.length; i++) {
-    const eObstacle = document.createElement("div");
-    eObstacle.classList.add(".obstacles");
-
-    eObstacles.push(eObstacle);
-  }
-  return eObstacles;
-}
-
-function placeObstacles() {
-  const obstacles = getObstacles();
-  const idx = getRandom(getObstacles().length);
-  eObstacles[idx].style.gridColumn = obstacles[idx].x;
-  eObstacles[idx].style.gridRow = obstacles[idx].y;
 }
 
 function dragCard(event) {
@@ -156,33 +137,28 @@ function updatePlayed() {
   ePlayedPile.innerHTML = "";
   played.forEach((c) => ePlayedPile.appendChild(createCard(c)));
 }
+
 function receiveCard(event) {
   if (arrastado == null) {
     return;
   }
-  //if(event.target != eDiscardPile) {return};
-
-  // if (rodada > 1) {
-  //   while (eDiscardPile.firstChild) {
-  //     eDiscardPile.removeChild(eDiscardPile.firstChild);
-  //   }
-  // }
-
-  // let descarte = document.querySelector("#discard");
-  // descarte.appendChild(arrastado);
-
-  // arrastado.add;
 
   playCard({
     efeito: arrastado.dataset.efeito,
     symbol: arrastado.dataset.symbol,
   });
-
+  
+  if(arrastado.dataset.efeito === "play-again" || arrastado.dataset.efeito === "take-two") {
+    updatePlayed();
+    eHand.removeChild(arrastado); 
+    return;
+  }
   updateCards();
   moveSnake();
   updateGrid();
-  updatePlayed();
   updateDiscard();
+  updatePlayed();
+
   rodada++;
   arrastado = null;
 }
