@@ -33,6 +33,9 @@ eDiscardPile.addEventListener("click", reshuffleCards);
 
 const eCards = createCards();
 
+drawHand();
+drawHand();
+drawHand();
 updateCards();
 updateGrid();
 
@@ -92,15 +95,14 @@ function updateObstacles() {
   }
 }
 
-function updateCards() {
-  drawHand();
-  drawHand();
-  drawHand();
 
+function removeCards(){
   while (eHand.firstChild) {
     eHand.removeChild(eHand.firstChild);
   }
-  
+}
+function updateCards() {
+
   for (let i = 0; i < getHand().length; i++) {
     const idx = getCards().findIndex((c) => c.symbol === getHand()[i].symbol);
     eHand.appendChild(eCards[idx]);
@@ -148,11 +150,23 @@ function receiveCard(event) {
     symbol: arrastado.dataset.symbol,
   });
   
-  if(arrastado.dataset.efeito === "play-again" || arrastado.dataset.efeito === "take-two") {
+  if(arrastado.dataset.efeito === "play-again") {
     updatePlayed();
     eHand.removeChild(arrastado); 
     return;
   }
+  if(arrastado.dataset.efeito === "take-two"){
+    updatePlayed();
+    drawHand();
+    drawHand();
+    removeCards();  
+    updateCards();
+    return;
+  }
+  drawHand();
+  drawHand();
+  drawHand();
+  removeCards();
   updateCards();
   moveSnake();
   updateGrid();

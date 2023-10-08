@@ -85,8 +85,11 @@ function playCard(card) {
     case "block-player":
       break;
     case "take-two": //falta implementar
-      hand.push(deck.splice(0, 2));
+    {
+      const idx = hand.findIndex((c) => c.efeito === card.efeito);
+      played.push(hand.splice(idx,1)[0]);
       return;
+    }
     case "increase-size":
       increaseSize();
       break;
