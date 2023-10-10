@@ -18,6 +18,8 @@ main {
   column-gap: 1em;
   height: 100vh;
   aspect-ratio: 9/16;
+  background-color: rgb(40, 167, 89);;
+
 }
 
 
@@ -26,4 +28,9 @@ button {
   height: 2em;
   grid-column: 1/2;
   grid-row: auto;
+}
+
+#grid-area {
+  display: grid;
+  place-items: center;
 }

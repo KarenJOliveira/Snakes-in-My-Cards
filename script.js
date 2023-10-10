@@ -1,11 +1,9 @@
-import { moveSnake, getSnake, getObstacles } from "./snake.js";
+import { moveSnake, getSnake, getObstacles, setLevel } from "./snake.js";
 import {
-  getBonus,
   getHand,
   getDeck,
   getCards,
   playCard,
-  getRandom,
   drawHand,
   getDiscard,
   getPlayed,
@@ -33,6 +31,7 @@ eDiscardPile.addEventListener("click", reshuffleCards);
 
 const eCards = createCards();
 
+setLevel(2, eGrid);
 drawHand();
 drawHand();
 drawHand();
