@@ -5,18 +5,20 @@ import {
   decreaseSpeed,
   increaseSize,
   decreaseSize,
+  setActions,
+  getActions
 } from "./snake.js";
 
 const cards = [
-  { efeito: "turn-clockwise", symbol: "↺" },
-  { efeito: "turn-anticlockwise", symbol: "↻" },
-  { efeito: "increase-speed", symbol: "⇡" },
-  { efeito: "decrease-speed", symbol: "⭭" },
-  { efeito: "block-player", symbol: "⭙" },
-  { efeito: "take-two", symbol: "🃟" },
-  { efeito: "increase-size", symbol: "+" },
-  { efeito: "decrease-size", symbol: "-" },
-  { efeito: "play-again", symbol: "🍀" },
+  { efeito: "turn-clockwise", symbol: "↺", custo: 1 },
+  { efeito: "turn-anticlockwise", symbol: "↻", custo: 1 },
+  { efeito: "increase-speed", symbol: "⇡", custo: 1 },
+  { efeito: "decrease-speed", symbol: "⭭", custo: 1 },
+  { efeito: "block-player", symbol: "⭙", custo: 1 },
+  { efeito: "take-two", symbol: "🃟", custo: 1 },
+  { efeito: "increase-size", symbol: "+", custo: 1 },
+  { efeito: "decrease-size", symbol: "-", custo: 1 },
+  { efeito: "play-again", symbol: "🍀", custo: 1 },
 ];
 const deck = [
   { ...cards[0] },
@@ -33,7 +35,7 @@ const hand = [];
 
 const discard = [];
 const played = [];
-
+const scoreboard = {round:0 , score:0, actions: 0};
 
 const bonus = [
   { x: 1, y: 7, type: "increase-speed" },
@@ -47,13 +49,16 @@ function getCards() {
 }
 
 function getDeck() {
-  return deck;
+  return structuredClone(deck);
 }
 
 function getHand() {
   return hand;
 }
 
+function getScoreboard() {
+  return scoreboard;
+}
 
 function getBonus() {
   return bonus;
@@ -101,7 +106,7 @@ function playCard(card) {
       const idx = hand.findIndex((c) => c.efeito === card.efeito);
       played.push(hand.splice(idx,1)[0]);
       return;
-    } 
+    }
   }
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
   played.push(hand.splice(idx,1)[0]);
@@ -143,8 +148,10 @@ function shuffle(array) {
   return array;
 }
 
-function getRandom(num) {
-  return Math.floor(Math.random() * num);
+function setScoreBoardValues(round, score, actions) {
+  scoreboard.round = round;
+  scoreboard.score = score;
+  scoreboard.actions = actions;
 }
 
 export {
@@ -153,8 +160,9 @@ export {
   playCard,
   getCards,
   getDeck,
-  getRandom,
   drawHand,
   getDiscard,
   getPlayed,
+  setScoreBoardValues,
+  getScoreboard
 };

@@ -1,4 +1,4 @@
-import { moveSnake, getSnake, getObstacles, setLevel } from "./snake.js";
+import { moveSnake, getSnake, getObstacles, setLevel, setActions, getActions } from "./snake.js";
 import {
   getHand,
   getDeck,
@@ -7,10 +7,14 @@ import {
   drawHand,
   getDiscard,
   getPlayed,
+  setScoreBoardValues,
+  getScoreboard
 } from "./cards.js";
 
 let arrastado = null;
-let rodada = 1;
+let round = 1;
+let score = 0;
+let playAgain = false;
 const eDeck = document.querySelector("#deck");
 
 let cont = getDeck().length;
@@ -24,11 +28,17 @@ const ePlayedPile = document.querySelector("#played");
 const eDiscardPile = document.querySelector("#discard");
 const eHand = document.querySelector("#hand");
 const eObstacles = document.querySelector(".obstacles");
+const eScoreBoard = document.querySelector("#scoreboard");
+const eScore = document.querySelector("#score");
+const eRound = document.querySelector("#round");
+const eActions = document.querySelector("#actions");
 
 ePlayedPile.addEventListener("dragover", dragOver);
 ePlayedPile.addEventListener("drop", receiveCard);
 eDiscardPile.addEventListener("click", reshuffleCards);
 
+createScoreBoard();
+updateScoreBoard(round, score, getActions());
 const eCards = createCards();
 
 setLevel(2, eGrid);
@@ -128,6 +138,14 @@ function dragOver(event) {
   event.preventDefault();
 }
 
+function updateScoreBoard(){
+  const scoreboard = getScoreboard();
+
+  eRound.textContent = "Round: " + scoreboard.round + " / x";
+  eScore.textContent = "Score: " + scoreboard.score;
+  eActions.textContent = "Actions: " + scoreboard.actions;
+}
+
 function updateDiscard() {
   const discard = getDiscard();
   eDiscardPile.innerHTML = "";
@@ -143,7 +161,9 @@ function receiveCard(event) {
   if (arrastado == null) {
     return;
   }
-
+  if(arrastado.dataset.custo > getScoreboard().actions) {
+    return;
+  }
   playCard({
     efeito: arrastado.dataset.efeito,
     symbol: arrastado.dataset.symbol,
@@ -152,6 +172,8 @@ function receiveCard(event) {
   if(arrastado.dataset.efeito === "play-again") {
     updatePlayed();
     eHand.removeChild(arrastado); 
+    playAgain = true;
+    arrastado = null;
     return;
   }
   if(arrastado.dataset.efeito === "take-two"){
@@ -160,8 +182,14 @@ function receiveCard(event) {
     drawHand();
     removeCards();  
     updateCards();
+    arrastado = null;
     return;
   }
+  if(getScoreboard().actions === 0){
+    playAgain = false;
+  }
+  
+
   drawHand();
   drawHand();
   drawHand();
@@ -171,8 +199,11 @@ function receiveCard(event) {
   updateGrid();
   updateDiscard();
   updatePlayed();
+  round++;
 
-  rodada++;
+  setScoreBoardValues(round, score, getActions());
+  updateScoreBoard();
+
   arrastado = null;
 }
 
@@ -189,6 +220,7 @@ function createCard(card, id) {
   eCard.dataset.efeito = card.efeito;
   eCard.title = card.efeito;
   eCard.dataset.symbol = card.symbol;
+  eCard.custo = card.custo;
   eCard.dataset.id = id;
 
   const eSymbol = document.createElement("div");
@@ -196,4 +228,17 @@ function createCard(card, id) {
 
   eCard.appendChild(eSymbol);
   return eCard;
+}
+
+function createScoreBoard(){
+  const scoreboard = getScoreboard();
+  
+  eRound.textContent = "Round: " + scoreboard.round + " / x";
+  eScoreBoard.appendChild(eRound);
+
+  eScore.textContent = "Score: " + scoreboard.score;
+  eScoreBoard.appendChild(eScore);
+
+  eActions.textContent = "Actions: " + scoreboard.actions;
+  eScoreBoard.appendChild(eActions);
 }

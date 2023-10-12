@@ -3,7 +3,7 @@ let snakeBody = [];
 let snakeTail = { x: -1, y: -1 };
 let obstacles = [];
 let currentLevel = 1;
-
+let actions = 1;
 
 function getSnake() {
   return {
@@ -76,7 +76,6 @@ function turnClockwise() {
 }
 
 function turnAntiClockwise() {
-  console.log("aaaaaaa");
   switch (snakeHead.d) {
     case "n":
       snakeHead.d = "w";
@@ -118,7 +117,7 @@ function setLevel(level, eGrid) {
       return setLevel2(eGrid);
 
     default:
-      return setLevel1(EGrid);
+      return setLevel1(eGrid);
   }
 }
 
@@ -173,6 +172,13 @@ function getCurentLevel() {
   return currentLevel;
 }
 
+function setActions(n) {
+  actions = n;
+}
+function getActions() {
+  return actions;
+}
+
 export {
   getSnake,
   moveSnake,
@@ -185,4 +191,6 @@ export {
   getObstacles,
   getCurentLevel,
   setLevel,
+  setActions,
+  getActions,
 };
