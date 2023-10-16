@@ -38,7 +38,8 @@ ePlayedPile.addEventListener("drop", receiveCard);
 eDiscardPile.addEventListener("click", reshuffleCards);
 
 createScoreBoard();
-updateScoreBoard(round, score, getActions());
+setScoreBoardValues(round, score, getActions());
+updateScoreBoard();
 const eCards = createCards();
 
 setLevel(2, eGrid);
@@ -140,7 +141,7 @@ function dragOver(event) {
 
 function updateScoreBoard(){
   const scoreboard = getScoreboard();
-
+  
   eRound.textContent = "Round: " + scoreboard.round + " / x";
   eScore.textContent = "Score: " + scoreboard.score;
   eActions.textContent = "Actions: " + scoreboard.actions;
@@ -172,7 +173,15 @@ function receiveCard(event) {
   if(arrastado.dataset.efeito === "play-again") {
     updatePlayed();
     eHand.removeChild(arrastado); 
+    const scoreboard = getScoreboard();
+    scoreboard.actions = getActions()+1;
     playAgain = true;
+    arrastado = null;
+    return;
+  }
+  if(playAgain === true){
+    updatePlayed();
+    eHand.removeChild(arrastado); 
     arrastado = null;
     return;
   }
@@ -220,7 +229,7 @@ function createCard(card, id) {
   eCard.dataset.efeito = card.efeito;
   eCard.title = card.efeito;
   eCard.dataset.symbol = card.symbol;
-  eCard.custo = card.custo;
+  eCard.dataset.custo = card.custo;
   eCard.dataset.id = id;
 
   const eSymbol = document.createElement("div");
