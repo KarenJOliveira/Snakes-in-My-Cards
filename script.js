@@ -158,47 +158,7 @@ function updatePlayed() {
   played.forEach((c) => ePlayedPile.appendChild(createCard(c)));
 }
 
-function receiveCard(event) {
-  if (arrastado == null) {
-    return;
-  }
-  if(arrastado.dataset.custo > getScoreboard().actions) {
-    return;
-  }
-  playCard({
-    efeito: arrastado.dataset.efeito,
-    symbol: arrastado.dataset.symbol,
-  });
-  
-  if(arrastado.dataset.efeito === "play-again") {
-    updatePlayed();
-    eHand.removeChild(arrastado); 
-    const scoreboard = getScoreboard();
-    scoreboard.actions = getActions()+1;
-    playAgain = true;
-    arrastado = null;
-    return;
-  }
-  if(playAgain === true){
-    updatePlayed();
-    eHand.removeChild(arrastado); 
-    arrastado = null;
-    return;
-  }
-  if(arrastado.dataset.efeito === "take-two"){
-    updatePlayed();
-    drawHand();
-    drawHand();
-    removeCards();  
-    updateCards();
-    arrastado = null;
-    return;
-  }
-  if(getScoreboard().actions === 0){
-    playAgain = false;
-  }
-  
-
+function loop(){
   drawHand();
   drawHand();
   drawHand();
@@ -212,7 +172,62 @@ function receiveCard(event) {
 
   setScoreBoardValues(round, score, getActions());
   updateScoreBoard();
+}
 
+function playAgainExe(){
+  updatePlayed();
+  setActions(getActions() + 1);
+  setScoreBoardValues(round, score, getActions());
+  updateScoreBoard();
+}
+
+function takeTwo(){
+  updatePlayed();
+  drawHand();
+  drawHand();
+  removeCards();  
+  updateCards();
+}
+
+function receiveCard(event) {
+  if (arrastado == null) {
+    return;
+  }
+  if(arrastado.dataset.custo > getActions()) {
+    return;
+  }
+  if(getScoreboard().actions === 0){
+    playAgain = false;
+  }
+
+  playCard({
+    efeito: arrastado.dataset.efeito,
+    symbol: arrastado.dataset.symbol,
+  });
+
+  setActions(getActions() - arrastado.dataset.custo);
+
+  if(arrastado.dataset.efeito === "play-again") {
+    playAgainExe();
+    eHand.removeChild(arrastado);
+    playAgain = true;
+    return;
+  }
+
+  if(playAgain == true){
+    playAgainExe();
+    eHand.removeChild(arrastado);
+    arrastado = null;
+    return;
+  }
+
+  if(arrastado.dataset.efeito === "take-two"){
+    takeTwo();
+    arrastado = null;
+    return;
+  }
+
+  loop();
   arrastado = null;
 }
 
