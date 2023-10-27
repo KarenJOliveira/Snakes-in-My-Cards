@@ -58,6 +58,10 @@ function isCollidingWithObstacle() {
   return false;
 }
 
+function verifyCollisions() {
+  return snakeHead.hit;
+}
+
 function turnClockwise() {
   switch (snakeHead.d) {
     case "n":
@@ -193,4 +197,5 @@ export {
   setLevel,
   setActions,
   getActions,
+  verifyCollisions
 };

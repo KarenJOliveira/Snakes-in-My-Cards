@@ -1,4 +1,4 @@
-import { moveSnake, getSnake, getObstacles, setLevel, setActions, getActions } from "./snake.js";
+import { moveSnake, getSnake, getObstacles, setLevel, setActions, getActions, verifyCollisions } from "./snake.js";
 import {
   getHand,
   getDeck,
@@ -84,14 +84,6 @@ function updateSnake() {
 
 }
 
-/*
-const buttonAnda = document.querySelector("#anda");
-buttonAnda.addEventListener('click', function(){
-  moveSnake();
-
-  updateSnake();
-});
-*/
 
 function updateObstacles() {
   const obstacles = getObstacles();
@@ -168,20 +160,27 @@ function loop(){
   updateGrid();
   updateDiscard();
   updatePlayed();
-  round++;
-
   setScoreBoardValues(round, score, getActions());
+  updateScoreBoard();
+  if(verifyCollisions()){
+    alert("Game Over");
+    location.reload();
+  }
+  round++;
+  
+  setScoreBoardValues(round, score, getActions());
+  setActions(getActions() + 1);
   updateScoreBoard();
 }
 
-function playAgainExe(){
+function playAgainGrid(){
   updatePlayed();
   setActions(getActions() + 1);
   setScoreBoardValues(round, score, getActions());
   updateScoreBoard();
 }
 
-function takeTwo(){
+function takeTwoGrid(){
   updatePlayed();
   drawHand();
   drawHand();
@@ -208,21 +207,14 @@ function receiveCard(event) {
   setActions(getActions() - arrastado.dataset.custo);
 
   if(arrastado.dataset.efeito === "play-again") {
-    playAgainExe();
+    playAgainGrid();
     eHand.removeChild(arrastado);
     playAgain = true;
     return;
   }
 
-  if(playAgain == true){
-    playAgainExe();
-    eHand.removeChild(arrastado);
-    arrastado = null;
-    return;
-  }
-
   if(arrastado.dataset.efeito === "take-two"){
-    takeTwo();
+    takeTwoGrid();
     arrastado = null;
     return;
   }
