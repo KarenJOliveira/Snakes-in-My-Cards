@@ -5,6 +5,19 @@ let obstacles = [];
 let currentLevel = 1;
 let actions = 1;
 
+const GAME_STATES = ["RUNNING", "GAME_OVER"];
+let gameState = "RUNNING";
+
+function setGameState(newState) {
+  if (!GAME_STATES.includes(newState)) {
+    console.error("Estado inválido: ", newState);
+  }
+  gameState = newState;
+}
+function getGameState() {
+  return gameState;
+}
+
 function getSnake() {
   return {
     head: { ...snakeHead },
@@ -145,14 +158,14 @@ function setLevel1() {
     obstacles.push({ x: 1, y: i });
     obstacles.push({ x: 10, y: i });
   }
-  return {rows, cols};
+  return { rows, cols };
 }
 
 function setLevel2() {
   const rows = 15;
   const cols = 8;
 
-  snakeHead = { x: 3, y: 5, d: 's', hit: false, speed: 2 };
+  snakeHead = { x: 3, y: 5, d: "s", hit: false, speed: 2 };
   snakeBody = [
     { x: 3, y: 4 },
     { x: 3, y: 3 },
@@ -169,7 +182,7 @@ function setLevel2() {
     obstacles.push({ x: 1, y: i });
     obstacles.push({ x: cols, y: i });
   }
-  return {rows, cols};
+  return { rows, cols };
 }
 
 function getCurentLevel() {
@@ -197,5 +210,7 @@ export {
   setLevel,
   setActions,
   getActions,
-  verifyCollisions
+  verifyCollisions,
+  setGameState,
+  getGameState,
 };

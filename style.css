@@ -18,10 +18,8 @@ main {
   column-gap: 1em;
   height: 100vh;
   aspect-ratio: 9/16;
-  background-color: rgb(40, 167, 89);;
-
+  background-color: rgb(40, 167, 89);
 }
-
 
 button {
   width: 5em;
@@ -33,4 +31,26 @@ button {
 #grid-area {
   display: grid;
   place-items: center;
+}
+
+#dialog {
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+  left: 25%;
+
+  background-color: white;
+  color: red;
+  display: grid;
+  place-items: center;
+  width: 50%;
+  height: 80px;
+  border: 1px red solid;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(120, 100%, 20%, 40%);
+}
+
+#dialog[data-show="true"] {
+  opacity: 1;
 }
