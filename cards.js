@@ -15,10 +15,10 @@ const cards = [
   { efeito: "increase-speed", symbol: "⇡", custo: 1 },
   { efeito: "decrease-speed", symbol: "⭭", custo: 1 },
   { efeito: "block-player", symbol: "⭙", custo: 1 },
-  { efeito: "take-two", symbol: "🃟", custo: 1 },
+  { efeito: "take-two", symbol: "+2", custo: 1 },
   { efeito: "increase-size", symbol: "+", custo: 1 },
   { efeito: "decrease-size", symbol: "-", custo: 1 },
-  { efeito: "play-again", symbol: "🍀", custo: 1 },
+  { efeito: "play-again", symbol: "play again", custo: 1 },
 ];
 const deck = [
   { ...cards[0] },
@@ -91,8 +91,7 @@ function playCard(card) {
       break;
     case "take-two": //falta implementar
     {
-      const idx = hand.findIndex((c) => c.efeito === card.efeito);
-      played.push(hand.splice(idx,1)[0]);
+      takeTwo(card);
       return;
     }
     case "increase-size":
@@ -103,10 +102,11 @@ function playCard(card) {
       break;
     case "play-again": //falta implementar: jogo não deve atualizar(cobra não deve andar, cartas não devem ser atualizadas)
     {
-      const idx = hand.findIndex((c) => c.efeito === card.efeito);
-      played.push(hand.splice(idx,1)[0]);
+      playAgain(card);
       return;
     }
+    default:
+      exit(1);
   }
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
   played.push(hand.splice(idx,1)[0]);
@@ -126,6 +126,21 @@ function drawHand() {
     shuffle(deck);
     hand.push(deck.pop());
   }
+}
+
+function takeTwo(card)
+{
+  const idx = hand.findIndex((c) => c.efeito === card.efeito);
+  played.push(hand.splice(idx,1)[0]);
+  drawHand();
+  drawHand();
+  return;
+}
+function playAgain(card)
+{
+  const idx = hand.findIndex((c) => c.efeito === card.efeito);
+  played.push(hand.splice(idx,1)[0]);
+  return;
 }
 
 function shuffle(array) {

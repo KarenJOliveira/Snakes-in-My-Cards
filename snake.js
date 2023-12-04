@@ -1,9 +1,22 @@
-let snakeHead = { x: -1, y: -1, d: "e", hit: false, speed: 2 };
+let snakeHead = { x: -1, y: -1, d: "e", hit: false, speed: 1 };
 let snakeBody = [];
 let snakeTail = { x: -1, y: -1 };
 let obstacles = [];
 let currentLevel = 1;
 let actions = 1;
+
+const GAME_STATES = ["RUNNING", "GAME_OVER"];
+let gameState = "RUNNING";
+
+function setGameState(newState) {
+  if (!GAME_STATES.includes(newState)) {
+    console.error("Estado inválido: ", newState);
+  }
+  gameState = newState;
+}
+function getGameState() {
+  return gameState;
+}
 
 function getSnake() {
   return {
@@ -28,16 +41,16 @@ function moveSnake() {
   snakeBody[0].y = snakeHead.y;
   switch (snakeHead.d) {
     case "s":
-      snakeHead.y++;
+      snakeHead.y ++;
       break;
     case "n":
-      snakeHead.y--;
+      snakeHead.y --;
       break;
     case "e":
-      snakeHead.x++;
+      snakeHead.x ++;
       break;
     case "w":
-      snakeHead.x--;
+      snakeHead.x --;
       break;
   }
 
@@ -56,6 +69,10 @@ function isCollidingWithObstacle() {
       return true;
   }
   return false;
+}
+
+function verifyCollisions() {
+  return snakeHead.hit;
 }
 
 function turnClockwise() {
@@ -141,14 +158,14 @@ function setLevel1() {
     obstacles.push({ x: 1, y: i });
     obstacles.push({ x: 10, y: i });
   }
-  return {rows, cols};
+  return { rows, cols };
 }
 
 function setLevel2() {
   const rows = 15;
   const cols = 8;
 
-  snakeHead = { x: 3, y: 5, d: 's', hit: false, speed: 2 };
+  snakeHead = { x: 3, y: 5, d: "s", hit: false, speed: 2 };
   snakeBody = [
     { x: 3, y: 4 },
     { x: 3, y: 3 },
@@ -165,7 +182,7 @@ function setLevel2() {
     obstacles.push({ x: 1, y: i });
     obstacles.push({ x: cols, y: i });
   }
-  return {rows, cols};
+  return { rows, cols };
 }
 
 function getCurentLevel() {
@@ -175,6 +192,7 @@ function getCurentLevel() {
 function setActions(n) {
   actions = n;
 }
+
 function getActions() {
   return actions;
 }
@@ -193,4 +211,7 @@ export {
   setLevel,
   setActions,
   getActions,
+  verifyCollisions,
+  setGameState,
+  getGameState,
 };
