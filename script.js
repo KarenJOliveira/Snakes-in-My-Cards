@@ -168,6 +168,15 @@ function loop() {
       setActions(getActions() + 1);
       updateScoreBoard();
       getDiscard().push(getPlayed().splice(0,1)[0]);
+      playAgain = true;
+      return;
+    }else if(playAgain){
+      removeCards();
+      updateCards();
+      updatePlayed();
+      setActions(getActions() + 1);
+      updateScoreBoard();
+      playAgain = false;
       return;
     }
     drawHand();
@@ -249,6 +258,10 @@ function reshuffleCards() {
   drawHand();
 }
 
+function checkPlayAgain(){
+  return playAgain;
+}
+
 function createCard(card, id) {
   const eCard = document.createElement("div");
   eCard.classList.add("card");
@@ -279,3 +292,7 @@ function createScoreBoard() {
   eActions.textContent = "Actions: " + scoreboard.actions;
   eScoreBoard.appendChild(eActions);
 }
+
+export {
+  checkPlayAgain,
+};

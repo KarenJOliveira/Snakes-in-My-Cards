@@ -6,8 +6,10 @@ import {
   increaseSize,
   decreaseSize,
   setActions,
-  getActions
+  getActions,
 } from "./snake.js";
+
+import { checkPlayAgain } from "./script.js";
 
 const cards = [
   { efeito: "turn-clockwise", symbol: "↺", custo: 1 },
@@ -35,7 +37,7 @@ const hand = [];
 
 const discard = [];
 const played = [];
-const scoreboard = {round:0 , score:0, actions: 0};
+const scoreboard = { round: 0, score: 0, actions: 0 };
 
 const bonus = [
   { x: 1, y: 7, type: "increase-speed" },
@@ -89,8 +91,8 @@ function playCard(card) {
       break;
     case "block-player":
       break;
-    case "take-two": //falta implementar
-    {
+    case "take-two": {
+      //falta implementar
       takeTwo(card);
       return;
     }
@@ -100,8 +102,8 @@ function playCard(card) {
     case "decrease-size":
       decreaseSize();
       break;
-    case "play-again": //falta implementar: jogo não deve atualizar(cobra não deve andar, cartas não devem ser atualizadas)
-    {
+    case "play-again": {
+      //falta implementar: jogo não deve atualizar(cobra não deve andar, cartas não devem ser atualizadas)
       playAgain(card);
       return;
     }
@@ -109,7 +111,10 @@ function playCard(card) {
       exit(1);
   }
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
-  played.push(hand.splice(idx,1)[0]);
+  played.push(hand.splice(idx, 1)[0]);
+  if (checkPlayAgain()) {
+    return;
+  }
   hand.forEach((c) => discard.push(c));
   hand.splice(0, hand.length);
   console.log(played, discard);
@@ -128,18 +133,16 @@ function drawHand() {
   }
 }
 
-function takeTwo(card)
-{
+function takeTwo(card) {
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
-  played.push(hand.splice(idx,1)[0]);
+  played.push(hand.splice(idx, 1)[0]);
   drawHand();
   drawHand();
   return;
 }
-function playAgain(card)
-{
+function playAgain(card) {
   const idx = hand.findIndex((c) => c.efeito === card.efeito);
-  played.push(hand.splice(idx,1)[0]);
+  played.push(hand.splice(idx, 1)[0]);
   return;
 }
 
@@ -179,5 +182,5 @@ export {
   getDiscard,
   getPlayed,
   setScoreBoardValues,
-  getScoreboard
+  getScoreboard,
 };
