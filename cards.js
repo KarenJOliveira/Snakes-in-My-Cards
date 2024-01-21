@@ -16,7 +16,7 @@ const cards = [
   { efeito: "turn-anticlockwise", symbol: "↻", custo: 1 },
   { efeito: "increase-speed", symbol: "⇡", custo: 1 },
   { efeito: "decrease-speed", symbol: "⭭", custo: 1 },
-  { efeito: "block-player", symbol: "⭙", custo: 1 },
+  { efeito: "dont-move", symbol: "⭙", custo: 1 },
   { efeito: "take-two", symbol: "+2", custo: 1 },
   { efeito: "increase-size", symbol: "+", custo: 1 },
   { efeito: "decrease-size", symbol: "-", custo: 1 },
@@ -89,7 +89,7 @@ function playCard(card) {
     case "decrease-speed":
       decreaseSpeed();
       break;
-    case "block-player":
+    case "dont-move":
       break;
     case "take-two": {
       //falta implementar
@@ -103,7 +103,6 @@ function playCard(card) {
       decreaseSize();
       break;
     case "play-again": {
-      //falta implementar: jogo não deve atualizar(cobra não deve andar, cartas não devem ser atualizadas)
       playAgain(card);
       return;
     }

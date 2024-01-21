@@ -41,16 +41,16 @@ function moveSnake() {
   snakeBody[0].y = snakeHead.y;
   switch (snakeHead.d) {
     case "s":
-      snakeHead.y ++;
+      snakeHead.y++;
       break;
     case "n":
-      snakeHead.y --;
+      snakeHead.y--;
       break;
     case "e":
-      snakeHead.x ++;
+      snakeHead.x++;
       break;
     case "w":
-      snakeHead.x --;
+      snakeHead.x--;
       break;
   }
 
@@ -67,6 +67,15 @@ function isCollidingWithObstacle() {
   for (let i = 0; i < obstacles.length; i++) {
     if (obstacles[i].x === snakeHead.x && obstacles[i].y === snakeHead.y)
       return true;
+    else if (obstacles[i].x === snakeTail.x && obstacles[i].y === snakeTail.y)
+      return true;
+    else {
+      for (let index = 0; index < snakeBody.length; index++) {
+        const element = snakeBody[index];
+        if (obstacles[i].x === element.x && obstacles[i].y === element.y)
+          return true;
+      }
+    }
   }
   return false;
 }
@@ -124,6 +133,10 @@ function decreaseSize() {
   snakeBody.pop();
 }
 
+function getSpeed() {
+  return snakeHead.speed;
+}
+
 function getObstacles() {
   return obstacles;
 }
@@ -143,7 +156,7 @@ function setLevel1() {
   const cols = 10;
   eGrid.templateRows = `repeat(${rows}, 20px)`;
   eGrid.templateColumns = `repeat(${cols}, 20px)`;
-  snakeHead = { x: 6, y: 5, d: "e", hit: false, speed: 2 };
+  snakeHead = { x: 6, y: 5, d: "e", hit: false, speed: 1 };
   snakeBody = [
     { x: 5, y: 5 },
     { x: 4, y: 5 },
@@ -165,7 +178,7 @@ function setLevel2() {
   const rows = 15;
   const cols = 8;
 
-  snakeHead = { x: 3, y: 5, d: "s", hit: false, speed: 2 };
+  snakeHead = { x: 3, y: 5, d: "s", hit: false, speed: 1 };
   snakeBody = [
     { x: 3, y: 4 },
     { x: 3, y: 3 },
@@ -214,4 +227,5 @@ export {
   verifyCollisions,
   setGameState,
   getGameState,
+  getSpeed,
 };

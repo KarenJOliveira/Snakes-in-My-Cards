@@ -8,6 +8,7 @@ import {
   verifyCollisions,
   getGameState,
   setGameState,
+  getSpeed,
 } from "./snake.js";
 import {
   getHand,
@@ -160,17 +161,19 @@ function updatePlayed() {
 
 function loop() {
   if (getGameState() === "RUNNING") {
-
-    if(getPlayed()[getPlayed().length-1].efeito === "take-two" || getPlayed()[getPlayed().length-1].efeito === "play-again"){
+    if (
+      getPlayed()[getPlayed().length - 1].efeito === "take-two" ||
+      getPlayed()[getPlayed().length - 1].efeito === "play-again"
+    ) {
       removeCards();
       updateCards();
       updatePlayed();
       setActions(getActions() + 1);
       updateScoreBoard();
-      getDiscard().push(getPlayed().splice(0,1)[0]);
+      getDiscard().push(getPlayed().splice(0, 1)[0]);
       playAgain = true;
       return;
-    }else if(playAgain){
+    } else if (playAgain) {
       removeCards();
       updateCards();
       updatePlayed();
@@ -179,12 +182,20 @@ function loop() {
       playAgain = false;
       return;
     }
+
     drawHand();
     drawHand();
     drawHand();
+
     removeCards();
     updateCards();
-    moveSnake();
+    if (getSpeed() > 1) {
+      for (let i = 0; i < getSpeed(); i++) {
+        moveSnake();
+      }
+    } else {
+      moveSnake();
+    }
     updateGrid();
     updateDiscard();
     updatePlayed();
@@ -219,9 +230,9 @@ function resetLevel(e) {
   const hand = getHand();
   const played = getPlayed();
   const discard = getDiscard();
-  hand.splice(0,hand.length);
-  played.splice(0,played.length);
-  discard.splice(0,discard.length);
+  hand.splice(0, hand.length);
+  played.splice(0, played.length);
+  discard.splice(0, discard.length);
   updateGrid();
   updatePlayed();
   updateDiscard();
@@ -229,7 +240,6 @@ function resetLevel(e) {
   updateScoreBoard();
   loop();
 }
-
 
 function receiveCard(event) {
   if (arrastado == null) {
@@ -258,7 +268,7 @@ function reshuffleCards() {
   drawHand();
 }
 
-function checkPlayAgain(){
+function checkPlayAgain() {
   return playAgain;
 }
 
@@ -293,6 +303,4 @@ function createScoreBoard() {
   eScoreBoard.appendChild(eActions);
 }
 
-export {
-  checkPlayAgain,
-};
+export { checkPlayAgain };
