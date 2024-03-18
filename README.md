@@ -1,0 +1,1 @@
+O jogo foi criado como uma forma de prática de JavaScript puro. Utilizamos a ideia do clássico jogo "Snake" com as mecânicas repensadas com uso de cartas. As cartas possuem comandos como virar, aumentar/diminuir a velocidade, aumentar/diminuir tamanho, pegar mais duas cartas e jogar duas vezes. 
