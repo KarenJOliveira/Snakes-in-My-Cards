@@ -151,7 +151,7 @@ function setLevel(level, eGrid) {
   }
 }
 
-function setLevel1() {
+function setLevel1(eGrid) {
   const rows = 10;
   const cols = 10;
   eGrid.templateRows = `repeat(${rows}, 20px)`;

@@ -55,11 +55,15 @@ updateScoreBoard();
 const eCards = createCards();
 
 setLevel(2, eGrid);
-drawHand();
-drawHand();
-drawHand();
-updateCards();
-updateGrid();
+startGame();
+
+function startGame() {
+  drawHand();
+  drawHand();
+  drawHand();
+  updateCards();
+  updateGrid();
+}
 
 function updateGrid() {
   eGrid.innerHTML = "";
@@ -117,8 +121,7 @@ function updateCards() {
     const idx = getCards().findIndex((c) => c.symbol === getHand()[i].symbol);
     eHand.appendChild(eCards[idx]);
   }
-  const deck = getDeck();
-  eCont.textContent = deck.length;
+  eCont.textContent = getDeck().length;
 }
 
 function createCards() {
@@ -230,6 +233,7 @@ function resetLevel(e) {
   const hand = getHand();
   const played = getPlayed();
   const discard = getDiscard();
+
   hand.splice(0, hand.length);
   played.splice(0, played.length);
   discard.splice(0, discard.length);
@@ -237,8 +241,11 @@ function resetLevel(e) {
   updatePlayed();
   updateDiscard();
   removeCards();
+  setScoreBoardValues(0, 0, 0);
+  round = 0;
   updateScoreBoard();
-  loop();
+  startGame();
+  return;
 }
 
 function receiveCard(event) {
